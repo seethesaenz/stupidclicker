@@ -1,12 +1,11 @@
 import pygame
 import pathlib
 from settings import Settings
-
+from upgrades import Sprites
 class game():
     def __init__(self):
         pygame.init()
         self.settings = Settings()
-
         self.declare_objects()
         self.declare_groups()
         self.run()
@@ -15,8 +14,8 @@ class game():
         self.score_text = Score(self.settings.score, self.settings.screen, self.settings.bg_color)
         self.click_it = bullshit(self.settings.screen_width//2, self.settings.screen_height//2)
         self.upgrade = upgrades(self.settings.screen)
-        self.back_button = back(self.settings.screen)
-        self.super_click = double_click(self.settings.screen)
+        self.back_button = Sprites(self.settings.screen, 'Back', (100, 50), (875, 40))
+        self.super_click = Sprites(self.settings.screen, "Super Clicker", (100, 50), (25, 40))
 
     def declare_groups(self):
         self.click_group = pygame.sprite.GroupSingle(self.click_it)
@@ -83,31 +82,6 @@ class game():
         self.click_group.draw(surface)
         self.score_text.show_score(self.settings.score)
         self.upgrade.draw()
-
-class back(pygame.sprite.Sprite):
-    def __init__(self, screen):
-        pygame.sprite.Sprite.__init__(self)
-        self.screen = screen
-        self.text = pygame.font.SysFont(None, 48)
-        self.back_image = self.text.render('Back', True, (0, 0, 0), (255, 255, 255))
-        self.image = pygame.Surface((100, 50))
-        self.image.fill((255, 255, 255))
-        self.rect = self.image.get_rect().move(875, 40)
-        self.image.blit(self.back_image, self.rect)
-
-
-class double_click(pygame.sprite.Sprite):
-    def __init__(self, screen):
-        pygame.sprite.Sprite.__init__(self)
-        self.screen = screen
-        self.back_image = pygame.font.SysFont(None, 48).render('Super Clicker', True, (0, 0, 0), (255, 255, 255))
-        self.image = pygame.Surface((100, 50))
-        self.image.fill((255, 255, 255))
-        self.rect = self.image.get_rect().move(25, 40)
-
-
-
-
 
 class mouse_sprite(pygame.sprite.Sprite):
     def __init__(self, x, y):
