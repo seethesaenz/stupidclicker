@@ -1,0 +1,30 @@
+clicker game:
+    -point system
+    -upgrades
+        -more points for click
+        -points/second
+    -sound effects on click... mute button?
+    -allow player to provide a picture for what you click.... size restraints or resize?
+    -cursor in game
+    -achievements?
+        -achievement screen?
+        -unlock different cursors w/ differing sound effects
+            -certain amount of clicks?
+        -different backgrounds
+
+    -
+    -upgrade cost?
+        #TODO
+        -super click x2 clicking power
+            -x = [25, x[0]*4, x[1]*4]
+        -machine gunner 1 click/s
+            -x = [25, x[0]*2]
+
+
+        -unlocked when 5 machine gunners bought?
+            -better machine gunner 5 click/s
+                -x = [1000, x[0]*3, x[1]*3]
+                
+            -unlocked when 5 better machine gunners bought?
+                -even better machine gunner 10 clicks/s
+                    -x = [10000, x[0]*3, x[1]*3]
