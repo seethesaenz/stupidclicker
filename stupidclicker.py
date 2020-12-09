@@ -1,7 +1,8 @@
 import pygame
-import pathlib
 from settings import Settings
 from upgrades import Sprites
+from scoring import Scoring
+
 class game():
     def __init__(self):
         pygame.init()
@@ -9,9 +10,10 @@ class game():
         self.declare_objects()
         self.declare_groups()
         self.run()
-    
+        
+
     def declare_objects(self):
-        self.score_text = Score(self.settings.score, self.settings.screen, self.settings.bg_color)
+        self.score_text = Scoring(self.settings.score, self.settings.screen, self.settings.bg_color)
         self.click_it = bullshit(self.settings.screen_width//2, self.settings.screen_height//2)
         self.upgrade = upgrades(self.settings.screen)
         self.back_button = Sprites(self.settings.screen, 'Back', (100, 50), (875, 40))
@@ -87,40 +89,6 @@ class mouse_sprite(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.rect = pygame.Rect(x, y, 1, 1)
-        
-
-class Score():
-
-    def __init__(self, score, screen, bg_color):
-        
-        # Set the dimensions and properties of the score and button.
-        self.screen = screen
-        self.screen_rect = screen.get_rect()
-        self.bg_color = bg_color
-        self.score = score
-        self.text_color = (255, 255, 255)
-        self.font = pygame.font.SysFont(None, 48)
-
-        # The score text
-        self.prep_score(score)
-
-    def prep_score(self, score):
-        """Turn msg into a rendered image"""
-        score_str = str(self.score)
-        self.score_image = self.font.render(score_str, True, self.text_color, self.bg_color)
-
-        # Display the score at the top right of the screen
-        self.score_rect = self.score_image.get_rect()
-        self.score_rect.center = self.screen_rect.center
-        self.score_rect.top = 20
-
-    def show_score(self, points):
-        # Draw the score
-        self.score_image = self.font.render(str(points), True, self.text_color, self.bg_color)
-        self.score_rect = self.score_image.get_rect()
-        self.score_rect.center = self.screen_rect.center
-        self.score_rect.top = 20
-        self.screen.blit(self.score_image, self.score_rect)
         
 #main clicker sprite class
 class bullshit(pygame.sprite.Sprite):
