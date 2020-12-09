@@ -6,18 +6,18 @@ from scoring import Scoring
 class game():
     def __init__(self):
         pygame.init()
-        self.settings = Settings()
         self.declare_objects()
-        self.declare_groups()
         self.run()
         
 
     def declare_objects(self):
+        self.settings = Settings()
         self.score_text = Scoring(self.settings.score, self.settings.screen, self.settings.bg_color)
         self.click_it = bullshit(self.settings.screen_width//2, self.settings.screen_height//2)
         self.upgrade = upgrades(self.settings.screen)
         self.back_button = Sprites(self.settings.screen, 'Back', (100, 50), (875, 40))
         self.super_click = Sprites(self.settings.screen, "Super Clicker", (100, 50), (25, 40))
+        self.declare_groups()
 
     def declare_groups(self):
         self.click_group = pygame.sprite.GroupSingle(self.click_it)
@@ -25,7 +25,6 @@ class game():
         self.upgrade_group.add(self.super_click)
         self.upgrade_group.add(self.back_button)
         
-
     def run(self):
         while self.settings.gogo:
             self.upgrade_page()
@@ -37,9 +36,9 @@ class game():
     def upgrade_page(self):
         while self.settings.upgrade_screen:
                 self.settings.screen.fill(self.settings.bg_color)
-                self.upgrade_event_handler()
                 self.draw_upgrades(self.settings.screen)
                 pygame.display.flip()
+                self.upgrade_event_handler()
 
     def upgrade_event_handler(self):
         for event in pygame.event.get():
