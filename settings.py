@@ -12,7 +12,7 @@ class Settings():
         pygame.display.set_caption("Stupid Clicker")
 
         # Sound settings
-        self.gunshot = pygame.mixer.Sound('assets/gunshow.wav')
+        self.gunshot = pygame.mixer.Sound('assets/gunshot.wav')
 
         # Score settings
         self.score = 0

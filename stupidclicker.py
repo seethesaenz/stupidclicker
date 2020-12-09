@@ -1,39 +1,22 @@
 import pygame
 import pathlib
+from settings import Settings
 
 class game():
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption('Stupid Clicker')
-
-        self.screen_width = 1000
-        self.screen_height = 1000
-
-        self.bg_color = (0, 0, 0)
-        self.military_bg = pygame.image.load('assets/military_bg.jpg')
-        #self.cookie_pic = pygame.image.load('assets/PerfectCookie.jpg')
-        self.score = 0
-        self.ppc = 1
-        self.super_clicker_price = 25
-
-
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        self.gunshot = pygame.mixer.Sound('assets/gunshot.wav')
+        self.settings = Settings()
 
         self.declare_objects()
         self.declare_groups()
-
-        self.gogo = True
-        self.upgrade_screen = False
-
         self.run()
     
     def declare_objects(self):
-        self.score_text = Score(self.score, self.screen, self.bg_color)
-        self.click_it = bullshit(self.screen_width//2, self.screen_height//2)
-        self.upgrade = upgrades(self.screen)
-        self.back_button = back(self.screen)
-        self.super_click = double_click(self.screen)
+        self.score_text = Score(self.settings.score, self.settings.screen, self.settings.bg_color)
+        self.click_it = bullshit(self.settings.screen_width//2, self.settings.screen_height//2)
+        self.upgrade = upgrades(self.settings.screen)
+        self.back_button = back(self.settings.screen)
+        self.super_click = double_click(self.settings.screen)
 
     def declare_groups(self):
         self.click_group = pygame.sprite.GroupSingle(self.click_it)
@@ -43,51 +26,51 @@ class game():
         
 
     def run(self):
-        while self.gogo:
+        while self.settings.gogo:
             self.upgrade_page()
-            self.draw(self.screen)
+            self.draw(self.settings.screen)
             pygame.display.flip()
             self.event_handler()
         pygame.quit()
 
     def upgrade_page(self):
-        while self.upgrade_screen:
-                self.screen.fill(self.bg_color)
+        while self.settings.upgrade_screen:
+                self.settings.screen.fill(self.settings.bg_color)
                 self.upgrade_event_handler()
-                self.draw_upgrades(self.screen)
+                self.draw_upgrades(self.settings.screen)
                 pygame.display.flip()
 
     def upgrade_event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.gogo = False
-                self.upgrade_screen = False
+                self.settings.gogo = False
+                self.settings.upgrade_screen = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 mouse = mouse_sprite(x, y)
                 if pygame.sprite.collide_rect(mouse, self.back_button):
-                    self.upgrade_screen = False
+                    self.settings.upgrade_screen = False
                 if pygame.sprite.collide_rect(mouse, self.super_click):
-                    if self.score >= self.super_clicker_price:
-                        self.ppc *= 2
-                        self.score -= self.super_clicker_price
-                        self.super_clicker_price *= 4
+                    if self.settings.score >= self.settings.super_clicker_price:
+                        self.settings.ppc *= 2
+                        self.settings.score -= self.settings.super_clicker_price
+                        self.settings.super_clicker_price *= 4
                     else:
                         print('send error message to screen!')
 
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.gogo = False
+                self.settings.gogo = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 mouse = mouse_sprite(x, y)
                 for i in self.click_group:
                     if pygame.sprite.collide_rect(mouse, i):
-                        self.gunshot.play()
-                        self.score += self.ppc
+                        self.settings.gunshot.play()
+                        self.settings.score += self.settings.ppc
                     if pygame.sprite.collide_rect(self.upgrade, mouse):
-                        self.upgrade_screen = True
+                        self.settings.upgrade_screen = True
 
     def draw_upgrades(self, surface):
         self.upgrade_group.draw(surface)
@@ -96,9 +79,9 @@ class game():
         #self.even_better_machine_gunner.draw()
 
     def draw(self, surface):
-        self.screen.blit(self.military_bg, self.screen.get_rect())
+        self.settings.screen.blit(self.settings.military_bg, self.settings.screen.get_rect())
         self.click_group.draw(surface)
-        self.score_text.show_score(self.score)
+        self.score_text.show_score(self.settings.score)
         self.upgrade.draw()
 
 class back(pygame.sprite.Sprite):
