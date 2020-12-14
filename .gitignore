@@ -1,1 +1,14 @@
 /.vscode
+/ideas
+/venv
+/.ideas
+/__pycache__
+.idea/leetcode/editor.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/vcs.xml
+.idea/stupidclicker.iml
+.idea/modules.xml
+.idea/misc.xml
+__pycache__/upgrades.cpython-39.pyc
+__pycache__/settings.cpython-39.pyc
+.idea/.gitignore
